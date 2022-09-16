@@ -32,6 +32,6 @@
   "scripts": {
     "download": "curl https://unicode.org/Public/emoji/15.0/emoji-sequences.txt > data/emoji-data.txt",
     "build": "node scripts/build.js",
-    "test": "node tests/tests.js"
+    "test": "node --no-warnings tests/tests.js"
   }
 }
