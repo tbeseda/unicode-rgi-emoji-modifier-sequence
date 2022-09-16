@@ -17,7 +17,8 @@
     "unicode-data",
     "emoji",
     "modifier",
-    "Emoji_Modifier_Base"
+    "Emoji_Modifier_Base",
+    "RGI_Emoji_Modifier_Sequence"
   ],
   "license": "MIT",
   "author": {
