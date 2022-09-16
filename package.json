@@ -1,14 +1,15 @@
 {
-  "name": "unicode-emoji-modifier-base",
+  "name": "unicode-rgi-emoji-modifier-sequence",
   "version": "1.0.0",
-  "description": "The set of Unicode symbols that can serve as a base for emoji modifiers, i.e. those with the `Emoji_Modifier_Base` property set to `Yes`.",
-  "homepage": "https://github.com/mathiasbynens/unicode-emoji-modifier-base",
+  "description": "The set of Unicode symbols that can serve as a base for emoji modifiers, i.e. those with the `RGI_Emoji_Modifier_Sequence` property set to `Yes`.",
+  "homepage": "https://github.com/tbeseda/unicode-rgi-emoji-modifier-sequence",
+  "type": "module",
   "main": "index.js",
   "engines": {
-    "node": ">=4"
+    "node": ">=16"
   },
   "files": [
-    "LICENSE-MIT.txt",
+    "LICENSE.txt",
     "index.js"
   ],
   "keywords": [
@@ -20,25 +21,16 @@
   ],
   "license": "MIT",
   "author": {
-    "name": "Mathias Bynens",
-    "url": "https://mathiasbynens.be/"
+    "name": "tbeseda"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mathiasbynens/unicode-emoji-modifier-base.git"
+    "url": "https://github.com/tbeseda/unicode-rgi-emoji-modifier-sequence.git"
   },
-  "bugs": "https://github.com/mathiasbynens/unicode-emoji-modifier-base/issues",
-  "devDependencies": {
-    "codecov": "^1.0.1",
-    "istanbul": "^0.4.4",
-    "jsesc": "^2.2.0",
-    "lodash.range": "^3.1.5",
-    "mocha": "^2.2.1"
-  },
+  "bugs": "https://github.com/tbeseda/unicode-rgi-emoji-modifier-sequence/issues",
   "scripts": {
-    "download": "curl http://unicode.org/Public/emoji/3.0/emoji-data.txt > data/emoji-data.txt",
+    "download": "curl https://unicode.org/Public/emoji/15.0/emoji-sequences.txt > data/emoji-data.txt",
     "build": "node scripts/build.js",
-    "test": "mocha tests",
-    "cover": "istanbul cover --report html node_modules/.bin/_mocha tests -- -u exports -R spec"
+    "test": "node tests/tests.js"
   }
 }

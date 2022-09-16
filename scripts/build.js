@@ -1,45 +1,40 @@
-'use strict';
+import { readFileSync, writeFileSync } from "node:fs";
 
-const fs = require('fs');
-const jsesc = require('jsesc');
-const range = require('lodash.range');
-
-const parseEmojiData = function() {
+function parseEmojiData() {
 	const set = new Set();
-	const source = fs.readFileSync('./data/emoji-data.txt', 'utf8');
-	const lines = source.split('\n');
+	const source = readFileSync("./data/emoji-data.txt", "utf8");
+	const lines = source.split("\n");
+
+	console.log(`Parsing ${lines.length} lines...`);
+
 	for (const line of lines) {
-		if (!line || /^#/.test(line)) {
+		if (!line || line.startsWith("#")) {
 			continue;
 		}
-		const data = line.trim().split(';');
-		const charRange = data[0].trim();
-		const property = data[1].split('#')[0].trim();
-		if (property != 'Emoji_Modifier_Base') {
+
+		const parts = line.trim().split(";");
+		const type = parts[1].trim();
+
+		if (type !== "RGI_Emoji_Modifier_Sequence") {
 			continue;
 		}
-		const rangeParts = charRange.split('..');
-		if (rangeParts.length == 2) {
-			range(
-				parseInt(rangeParts[0], 16),
-				parseInt(rangeParts[1], 16) + 1
-			).forEach(function(codePoint) {
-				set.add(codePoint);
-			});
-		} else {
-			const codePoint = parseInt(rangeParts[0], 16);
-			set.add(codePoint);
-		}
+
+		const [character] = parts[0].trim().split(" ");
+
+		set.add(`0x${character}`);
 	}
+
 	return set;
-};
+}
 
 const set = parseEmojiData();
-const header = '// Generated using `npm run build`. Do not edit!';
-const output = `${ header }\nmodule.exports = ${
-	jsesc(set, {
-		'compact': false,
-		'numbers': 'hexadecimal'
-	})
-};\n`;
-require('fs').writeFileSync('./index.js', output);
+const header = "// Generated using `npm run build`. Do not edit!";
+const output = `${header}
+export default new Set([
+  ${[...set].join(",\n  ")}
+]);
+`;
+
+writeFileSync("./index.js", output);
+
+console.log(`Saved ${set.size} emoji codes.`);
